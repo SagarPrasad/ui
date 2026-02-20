@@ -1,0 +1,13 @@
+// Build the server
+pnpm build:server
+
+// Build & Tag it 
+docker buildx build \
+  --platform linux/amd64 \
+  -t devopsartifact.jio.com/jret-herald_forward_fs__dev__dcr/temporalio/temporal-ui-auth:latest \
+  -f server/Dockerfile \
+  server/ \
+  --push
+
+// Push to Artifact
+docker push devopsartifact.jio.com/jret-herald_forward_fs__dev__dcr/temporalio/temporal-ui-auth:latest
