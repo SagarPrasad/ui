@@ -9,6 +9,7 @@ export const workflowCancelEnabled = (
   return (
     !settings.disableWriteActions &&
     !settings.workflowCancelDisabled &&
-    !coreUser.namespaceWriteDisabled(namespace)
+    !coreUser.namespaceWriteDisabled(namespace) &&
+    coreUser.canCancel(namespace)
   );
 };

@@ -9,6 +9,7 @@ export const workflowTerminateEnabled = (
   return (
     !settings.disableWriteActions &&
     !settings.workflowTerminateDisabled &&
-    !coreUser.namespaceWriteDisabled(namespace)
+    !coreUser.namespaceWriteDisabled(namespace) &&
+    coreUser.canTerminate(namespace)
   );
 };

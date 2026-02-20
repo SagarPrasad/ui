@@ -40,6 +40,7 @@ const toNamespaceDetails = (
 export async function fetchNamespaces(
   settings: Settings,
   request = fetch,
+  allowedNamespaces?: string[],
 ): Promise<void> {
   const { showTemporalSystemNamespace, runtimeEnvironment } = settings;
 
@@ -67,6 +68,11 @@ export async function fetchNamespaces(
         (namespace: DescribeNamespaceResponse) =>
           showTemporalSystemNamespace ||
           namespace.namespaceInfo.name !== 'temporal-system',
+      )
+      .filter(
+        (namespace: DescribeNamespaceResponse) =>
+          !allowedNamespaces ||
+          allowedNamespaces.includes(namespace.namespaceInfo.name),
       )
       .map(toNamespaceDetails);
 

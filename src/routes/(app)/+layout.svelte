@@ -1,5 +1,8 @@
 <script lang="ts">
+  import { readable } from 'svelte/store';
+
   import type { Snippet } from 'svelte';
+  import { setContext } from 'svelte';
 
   import { afterNavigate, goto } from '$app/navigation';
   import { page, updated } from '$app/state';
@@ -17,8 +20,10 @@
   import UserMenuMobile from '$lib/holocene/user-menu-mobile.svelte';
   import UserMenu from '$lib/holocene/user-menu.svelte';
   import { translate } from '$lib/i18n/translate';
+  import { CoreUserKey } from '$lib/models/core-user';
   import { authUser, clearAuthUser } from '$lib/stores/auth-user';
   import { inProgressBatchOperation } from '$lib/stores/batch-operations';
+  import { buildCoreUser } from '$lib/stores/core-user';
   import { lastUsedNamespace, namespaces } from '$lib/stores/namespaces';
   import { toaster } from '$lib/stores/toaster';
   import type { NamespaceListItem, NavLinkListItem } from '$lib/types/global';
@@ -43,7 +48,10 @@
     children: Snippet;
   }
 
-  let { children }: Props = $props();
+  let { data, children }: Props & { data: import('./$types').LayoutData } =
+    $props();
+
+  setContext(CoreUserKey, readable(buildCoreUser(data.permissions ?? null)));
 
   let isCloud = $derived(page.data?.settings?.runtimeEnvironment?.isCloud);
   let activeNamespaceName = $derived(

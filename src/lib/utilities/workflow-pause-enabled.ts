@@ -9,6 +9,7 @@ export const workflowPauseEnabled = (
   return (
     !settings.disableWriteActions &&
     !settings.workflowPauseDisabled &&
-    !coreUser.namespaceWriteDisabled(namespace)
+    !coreUser.namespaceWriteDisabled(namespace) &&
+    coreUser.canPause(namespace)
   );
 };

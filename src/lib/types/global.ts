@@ -111,6 +111,27 @@ export type Settings = {
   version: string;
 };
 
+export type NamespacePermissions = {
+  read: boolean;
+  write: boolean;
+  actions: {
+    terminate: boolean;
+    reset: boolean;
+    signal: boolean;
+    cancel: boolean;
+    update: boolean;
+    schedule: boolean;
+    batch: boolean;
+    pause: boolean;
+  };
+  activities: boolean;
+};
+
+export type UserPermissions = {
+  namespaces: Record<string, NamespacePermissions>;
+  allowedNamespaces: string[];
+};
+
 export type User = {
   accessToken?: string;
   idToken?: string;

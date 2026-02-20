@@ -10,6 +10,7 @@ export const activityCommandsEnabled = (
     !settings.disableWriteActions &&
     !coreUser.namespaceWriteDisabled(namespace) &&
     !coreUser.isActivityCommandsDisabled &&
-    !settings.activityCommandsDisabled
+    !settings.activityCommandsDisabled &&
+    coreUser.canIssueActivityCommands(namespace)
   );
 };

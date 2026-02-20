@@ -1,0 +1,59 @@
+temporalGrpcAddress: 10.167.248.24:30533
+publicPath:
+port: 8081
+enableUi: false
+bannerText:
+cors:
+  cookieInsecure: true
+  unsafeAllowAllOrigins: true
+  allowOrigins:
+    - http://localhost:3000
+    - http://localhost:3001
+refreshInterval: 1m
+defaultNamespace: default
+showTemporalSystemNamespace: false
+feedbackUrl:
+notifyOnNewVersion: true
+disableWriteActions: false
+workflowTerminateDisabled: false
+workflowCancelDisabled: false
+workflowSignalDisabled: false
+workflowUpdateDisabled: false
+workflowResetDisabled: false
+workflowPauseDisabled: false
+batchActionsDisabled: false
+startWorkflowDisabled: false
+hideWorkflowQueryErrors: false
+refreshWorkflowCountsDisabled: false
+activityCommandsDisabled: false
+auth:
+  enabled: true
+  maxSessionDuration: 0s  # 0s = unlimited; token refresh handles expiry
+  providers:
+    - label: Keycloak
+      type: oidc
+      providerUrl: http://10.167.240.227:8091/auth/realms/temporal-ui
+      issuerUrl: ""
+      clientId: temporal-ui
+      clientSecret: fde15a41-9d3e-45c0-9043-250f2fd30bc1
+      scopes:
+        - openid
+        - profile
+        - email
+        - offline_access
+      callbackUrl: http://localhost:8081/auth/sso/callback
+tls:
+  caFile:
+  certFile:
+  keyFile:
+  caData:
+  certData:
+  keyData:
+  enableHostVerification: false
+  serverName:
+codec:
+  endpoint:
+  passAccessToken: false
+  includeCredentials: false
+forwardHeaders:
+  - X-Forwarded-For

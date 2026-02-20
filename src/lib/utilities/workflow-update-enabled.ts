@@ -9,6 +9,7 @@ export const workflowUpdateEnabled = (
   return (
     !settings.disableWriteActions &&
     !settings.workflowUpdateDisabled &&
-    !coreUser.namespaceWriteDisabled(namespace)
+    !coreUser.namespaceWriteDisabled(namespace) &&
+    coreUser.canUpdate(namespace)
   );
 };

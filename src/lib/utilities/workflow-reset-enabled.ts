@@ -9,6 +9,7 @@ export const workflowResetEnabled = (
   return (
     !settings.disableWriteActions &&
     !settings.workflowResetDisabled &&
-    !coreUser.namespaceWriteDisabled(namespace)
+    !coreUser.namespaceWriteDisabled(namespace) &&
+    coreUser.canReset(namespace)
   );
 };

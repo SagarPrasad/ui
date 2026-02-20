@@ -7,12 +7,13 @@ import { fetchNamespaces } from '$lib/services/namespaces-service';
 import { fetchSettings } from '$lib/services/settings-service';
 import { clearAuthUser, getAuthUser, setAuthUser } from '$lib/stores/auth-user';
 import type { GetClusterInfoResponse, GetSystemInfoResponse } from '$lib/types';
-import type { Settings } from '$lib/types/global';
+import type { Settings, UserPermissions } from '$lib/types/global';
 import {
   cleanAuthUserCookie,
   getAuthUserCookie,
 } from '$lib/utilities/auth-user-cookie';
 import { isAuthorized } from '$lib/utilities/is-authorized';
+import { parsePermissionsFromToken } from '$lib/utilities/parse-permissions';
 import { routeForLoginPage } from '$lib/utilities/route-for';
 
 import '../../app.css';
@@ -39,7 +40,11 @@ export const load: LayoutLoad = async function ({
     redirect(302, routeForLoginPage());
   }
 
-  fetchNamespaces(settings, fetch);
+  const permissions: UserPermissions | null = settings.auth.enabled
+    ? parsePermissionsFromToken(user?.accessToken)
+    : null;
+
+  fetchNamespaces(settings, fetch, permissions?.allowedNamespaces);
 
   const cluster: GetClusterInfoResponse = await fetchCluster(settings, fetch);
   const systemInfo: GetSystemInfoResponse = await fetchSystemInfo(
@@ -52,5 +57,6 @@ export const load: LayoutLoad = async function ({
     settings,
     cluster,
     systemInfo,
+    permissions,
   };
 };

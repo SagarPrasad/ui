@@ -9,6 +9,7 @@ export const workflowSignalEnabled = (
   return (
     !settings.disableWriteActions &&
     !settings.workflowSignalDisabled &&
-    !coreUser.namespaceWriteDisabled(namespace)
+    !coreUser.namespaceWriteDisabled(namespace) &&
+    coreUser.canSignal(namespace)
   );
 };
